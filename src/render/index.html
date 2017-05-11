@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+  <meta charset='utf-8'>
+  <title>test </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="Content-Language" content="en">
+  <link rel="stylesheet" href="index.less"/>
+</head>
+<body>
+  <div class="ApplicationFrame">
+    <div app></div>
+  </div>
+</body>
+<script>
+  if (process.env.BROWSER_SYNC_MAIN_URL) {
+    const current = document.currentScript;
+    const script = document.createElement('script');
+    script.src = process.env.BROWSER_SYNC_MAIN_URL;
+    script.async = true;
+    current.parentNode.insertBefore(script, current);
+  }
+</script>
+<script src="./main.js"></script>
+</html>

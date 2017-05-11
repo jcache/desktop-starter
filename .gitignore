@@ -1,0 +1,13 @@
+node_modules/
+build/
+dist/
+out/
+npm-debug.log*
+/tmp/*
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+.vscode
