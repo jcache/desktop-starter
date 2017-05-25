@@ -1,12 +1,32 @@
 import electron , { BrowserWindow, app, Menu, ipcMain } from 'electron';
 import { enableLiveReload } from 'electron-compile';
 import config from '../config';
-
+import * as schemas from './schemas';
 let mainWindow = void 0;
-
-
 app.on('ready', () => {
-enableLiveReload({strategy: 'react-hmr'});
+
+  const knex = require('knex')({
+    dialect: 'sqlite3',
+    useNullAsDefault: false,
+    connection: {
+      filename: config.DB,
+    }
+  });
+  const initializeTable = (tableName, schemaName) => {
+    knex.schema.hasTable(tableName).then(function(exists) {
+      if (!exists) {
+        return knex.schema.createTable(tableName, t => schemas[schemaName](t));
+      }
+    });
+  }
+  
+  initializeTable(`campaign`, `Campaign`);
+  initializeTable(`character`, `Character`);
+  initializeTable(`application`, `Application`);
+  initializeTable(`player`, `Player`);
+
+  enableLiveReload({strategy: 'react-hmr'});
+  
   mainWindow = new BrowserWindow({
     width: 400,
     height: 400,
